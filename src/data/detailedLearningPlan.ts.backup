@@ -1,0 +1,1635 @@
+import { Task } from '../types';
+
+export const detailedLearningTasks: Task[] = [
+  // ==================== DAY 1 ====================
+  {
+    id: 'day1',
+    title: 'Day 1: Python 環境 + 基礎語法',
+    description: '從零開始學習 Python，完成環境設置並掌握基礎語法，完成 20 個編程練習',
+    week: 1,
+    day: 'Day 1',
+    category: 'Python 基礎',
+    icon: 'code',
+    status: 'backlog',
+    progress: 0,
+    color: '#0A84FF',
+    estimatedHours: 10,
+
+    learningObjectives: [
+      '✅ 完成 Python 開發環境設置（Python 3.9+, VS Code, pytest）',
+      '✅ 理解變量、數據類型（int, float, str, bool）',
+      '✅ 掌握列表（list）和字典（dict）的基本操作',
+      '✅ 學會使用 if-else 條件判斷',
+      '✅ 掌握 for 循環遍歷數據',
+      '✅ 能夠定義和調用函數',
+      '✅ 獨立完成 20 個 Python 練習題（至少 15 題）',
+    ],
+
+    coreConcepts: [
+      {
+        term: '變量 (Variable)',
+        definition: '用於儲存數據的容器。Python 是動態類型語言，不需要聲明類型。',
+        example: 'user_id = "123"  # 字串變量\nbalance = 1000  # 整數變量',
+        importance: 'critical',
+      },
+      {
+        term: '列表 (List)',
+        definition: '有序的可變集合，用中括號 [] 表示，可以存儲任意類型的數據。',
+        example: 'test_users = ["alice", "bob", "charlie"]\ntest_users.append("david")  # 添加元素',
+        importance: 'critical',
+      },
+      {
+        term: '字典 (Dictionary)',
+        definition: '鍵值對集合，用大括號 {} 表示，適合存儲結構化數據（如 JSON）。',
+        example: 'user = {"user_id": "123", "balance": 1000, "currency": "USDT"}',
+        importance: 'critical',
+      },
+      {
+        term: 'f-string 格式化',
+        definition: 'Python 3.6+ 的字串格式化方法，使用 f"..." 語法嵌入變量。',
+        example: 'name = "Alice"\nprint(f"Hello, {name}!")  # 輸出: Hello, Alice!',
+        importance: 'important',
+      },
+      {
+        term: '函數 (Function)',
+        definition: '可重複使用的代碼塊，使用 def 定義，可以接受參數並返回值。',
+        example: 'def validate_amount(amount):\n    return amount > 0 and amount <= 10000',
+        importance: 'critical',
+      },
+    ],
+
+    knowledgePoints: [
+      {
+        title: '1. Python 環境設置',
+        content: `安裝 Python 3.9+ 並設置虛擬環境，這是專業開發的標準做法。
+
+**為什麼需要虛擬環境？**
+- 隔離不同專案的依賴
+- 避免版本衝突
+- 便於專案遷移和部署
+
+**必裝套件：**
+- pytest: 測試框架
+- requests: HTTP 請求庫
+- pytest-html: 測試報告生成`,
+        codeExample: `# 檢查 Python 版本
+python3 --version  # 應該 >= 3.9
+
+# 創建虛擬環境
+python3 -m venv venv
+
+# 啟動虛擬環境 (macOS/Linux)
+source venv/bin/activate
+
+# 安裝套件
+pip install pytest requests pytest-html
+
+# 驗證安裝
+pytest --version`,
+        language: 'bash',
+      },
+      {
+        title: '2. 變量與數據類型',
+        content: `Python 是動態類型語言，變量不需要聲明類型。常用的基本類型包括：
+
+**基本類型：**
+- int: 整數（如 100, -50）
+- float: 浮點數（如 100.5, 0.01）
+- str: 字串（如 "USDT", 'BTC'）
+- bool: 布林值（True, False）
+
+**命名規範：**
+- 使用 snake_case（小寫+底線）
+- 變量名要有意義（user_id 而非 u）
+- 避免使用 Python 關鍵字`,
+        codeExample: `# API 測試常用變量
+api_base_url = "https://api.binance.com"  # str
+api_version = "v1"
+timeout = 30  # int
+is_authenticated = True  # bool
+balance = 1000.50  # float
+
+# 類型檢查
+print(type(balance))  # <class 'float'>`,
+        language: 'python',
+      },
+      {
+        title: '3. 字串操作（API 測試必備）',
+        content: `字串是 API 測試中最常操作的數據類型，用於構建 URL、解析響應等。
+
+**常用操作：**
+- 拼接：使用 + 或 f-string
+- 分割：split() 方法
+- 替換：replace() 方法
+- 格式化：f-string 或 format()`,
+        codeExample: `# 構建 API URL
+base_url = "https://api.binance.com"
+endpoint = "/v1/users"
+user_id = "123"
+
+# 方法 1: 使用 + 拼接
+url = base_url + endpoint + "?id=" + user_id
+
+# 方法 2: 使用 f-string（推薦）
+url = f"{base_url}{endpoint}?id={user_id}"
+print(url)  # https://api.binance.com/v1/users?id=123
+
+# 常用字串方法
+token = "Bearer abc123xyz"
+print(token.startswith("Bearer"))  # True
+print(token.split(" ")[1])  # abc123xyz`,
+        language: 'python',
+      },
+      {
+        title: '4. 列表操作（處理測試數據）',
+        content: `列表用於存儲多個數據，在測試中常用於批量測試、數據驗證等場景。
+
+**常用操作：**
+- 添加元素：append(), extend()
+- 刪除元素：remove(), pop()
+- 訪問元素：索引 [0], [-1]
+- 遍歷：for 循環
+- 切片：[start:end]`,
+        codeExample: `# 測試用戶列表
+test_users = ["alice", "bob", "charlie"]
+
+# 添加用戶
+test_users.append("david")
+
+# 訪問元素
+first_user = test_users[0]  # alice
+last_user = test_users[-1]  # david
+
+# 遍歷列表
+for user in test_users:
+    print(f"Testing user: {user}")
+
+# 列表長度
+user_count = len(test_users)  # 4
+
+# 檢查元素是否存在
+if "alice" in test_users:
+    print("Alice found!")
+
+# 批量金額測試
+test_amounts = [0.01, 100, 1000, 10000, 10001]
+for amount in test_amounts:
+    if 0.01 <= amount <= 10000:
+        print(f"✅ {amount} 有效")
+    else:
+        print(f"❌ {amount} 無效")`,
+        language: 'python',
+      },
+      {
+        title: '5. 字典操作（解析 API 響應）',
+        content: `字典是 key-value 結構，與 JSON 格式完全對應，是 API 測試的核心數據結構。
+
+**常用操作：**
+- 訪問值：dict["key"] 或 dict.get("key")
+- 添加/修改：dict["key"] = value
+- 刪除：del dict["key"]
+- 遍歷：items(), keys(), values()`,
+        codeExample: `# API 響應解析（最常用場景）
+api_response = {
+    "status_code": 200,
+    "data": {
+        "payment_id": "pay_abc123",
+        "status": "success",
+        "amount": 100,
+        "currency": "USDT"
+    }
+}
+
+# 提取數據
+payment_id = api_response["data"]["payment_id"]
+status = api_response["data"]["status"]
+amount = api_response["data"]["amount"]
+
+print(f"Payment {payment_id}: {status}, $" + "{amount}")
+
+# 安全的訪問方式（避免 KeyError）
+user_id = api_response.get("user_id", "unknown")
+
+# 遍歷字典
+for key, value in api_response["data"].items():
+    print(f"{key}: {value}")
+
+# 檢查 key 是否存在
+if "payment_id" in api_response["data"]:
+    print("Payment ID found!")`,
+        language: 'python',
+      },
+      {
+        title: '6. 條件判斷（if-elif-else）',
+        content: `條件判斷用於根據不同情況執行不同代碼，在測試中用於驗證、分支處理等。
+
+**比較運算符：**
+- ==, !=：等於、不等於
+- >, <, >=, <=：大於、小於及其等於
+- in, not in：成員檢查
+- and, or, not：邏輯運算`,
+        codeExample: `# HTTP 狀態碼判斷
+status_code = 404
+
+if status_code == 200:
+    print("✅ Success")
+elif status_code == 404:
+    print("⚠️ Not Found")
+elif 500 <= status_code < 600:
+    print("❌ Server Error")
+else:
+    print("❓ Unknown Status")
+
+# 金額驗證
+amount = 100
+
+if amount <= 0:
+    result = "金額必須大於0"
+elif amount > 10000:
+    result = "金額超過限制"
+else:
+    result = "金額有效"
+
+print(result)
+
+# 多條件判斷
+user_role = "admin"
+is_active = True
+
+if user_role == "admin" and is_active:
+    print("管理員且帳號啟用")
+elif user_role == "admin" or is_active:
+    print("管理員或帳號啟用")
+else:
+    print("普通用戶")`,
+        language: 'python',
+      },
+      {
+        title: '7. for 循環（批量測試）',
+        content: `for 循環用於遍歷序列（列表、字典等），在測試中用於批量執行測試、數據驗證等。
+
+**遍歷方式：**
+- 遍歷列表：for item in list
+- 遍歷字典：for key, value in dict.items()
+- 範圍循環：for i in range(n)
+- 帶索引：for i, item in enumerate(list)`,
+        codeExample: `# 批量測試狀態碼
+status_codes = [200, 201, 400, 404, 500]
+
+for code in status_codes:
+    if 200 <= code < 300:
+        print(f"✅ {code}: Success")
+    elif 400 <= code < 500:
+        print(f"⚠️ {code}: Client Error")
+    elif 500 <= code < 600:
+        print(f"❌ {code}: Server Error")
+
+# 批量金額驗證
+test_amounts = [0.01, 100, 10000, 20000]
+
+for amount in test_amounts:
+    if 0.01 <= amount <= 10000:
+        print(f"✅ {amount} USDT: 有效")
+    else:
+        print(f"❌ {amount} USDT: 無效")
+
+# 帶索引的遍歷
+users = ["alice", "bob", "charlie"]
+
+for index, user in enumerate(users, start=1):
+    print(f"測試 {index}: {user}")
+
+# 遍歷字典
+payment_data = {
+    "amount": 100,
+    "currency": "USDT",
+    "status": "success"
+}
+
+for key, value in payment_data.items():
+    print(f"{key} = {value}")`,
+        language: 'python',
+      },
+      {
+        title: '8. 函數定義（代碼重用）',
+        content: `函數是組織代碼的基本單位，讓代碼可重複使用、易於維護。
+
+**函數結構：**
+- def 函數名(參數):
+- return 返回值
+- 參數可以有默認值
+- 可以返回多個值（tuple）`,
+        codeExample: `# 金額驗證函數
+def validate_amount(amount):
+    """
+    驗證支付金額是否有效
+
+    Args:
+        amount: 支付金額
+
+    Returns:
+        (bool, str): (是否有效, 錯誤訊息)
+    """
+    if amount <= 0:
+        return (False, "金額必須大於0")
+    elif amount > 10000:
+        return (False, "金額超過限制")
+    else:
+        return (True, "金額有效")
+
+# 使用函數
+is_valid, message = validate_amount(100)
+print(f"驗證結果: {is_valid}, {message}")
+
+# 帶默認值的函數
+def build_api_url(endpoint, version="v1", base_url="https://api.binance.com"):
+    """構建完整 API URL"""
+    return f"{base_url}/{version}{endpoint}"
+
+# 調用
+url1 = build_api_url("/users")  # 使用默認值
+url2 = build_api_url("/payments", version="v2")  # 覆蓋默認值
+print(url1)  # https://api.binance.com/v1/users
+print(url2)  # https://api.binance.com/v2/payments
+
+# HTTP Headers 函數
+def create_headers(token):
+    """創建 API 請求 Headers"""
+    return {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+    }
+
+headers = create_headers("abc123")
+print(headers)`,
+        language: 'python',
+      },
+    ],
+
+    codeExamples: [
+      {
+        title: '完整範例：API 金額驗證系統',
+        code: `# 定義驗證函數
+def validate_payment_amount(amount):
+    """驗證支付金額"""
+    if not isinstance(amount, (int, float)):
+        return (False, "金額必須是數字")
+
+    if amount <= 0:
+        return (False, "金額必須大於0")
+
+    if amount > 10000:
+        return (False, "金額不能超過10000")
+
+    # 檢查小數點位數
+    if isinstance(amount, float):
+        decimal_str = str(amount).split('.')[1] if '.' in str(amount) else ""
+        if len(decimal_str) > 2:
+            return (False, "小數點最多2位")
+
+    return (True, "金額有效")
+
+# 批量測試
+test_amounts = [0.01, 100, 500.50, 10000, 10001, -10, "abc", 100.123]
+
+passed = 0
+failed = 0
+
+print("===== 金額驗證測試 =====\\n")
+
+for i, amount in enumerate(test_amounts, 1):
+    is_valid, message = validate_payment_amount(amount)
+    status = "✅ PASS" if is_valid else "❌ FAIL"
+    print(f"Test {i}: {amount} -> {status}: {message}")
+
+    if is_valid:
+        passed += 1
+    else:
+        failed += 1
+
+print(f"\\n===== 測試結果 =====")
+print(f"總共: {len(test_amounts)} 個測試")
+print(f"通過: {passed} 個")
+print(f"失敗: {failed} 個")
+print(f"通過率: {(passed/len(test_amounts)*100):.1f}%")`,
+        language: 'python',
+        explanation: '這個範例展示了如何：1) 定義可重用的驗證函數 2) 進行完整的輸入驗證 3) 批量執行測試 4) 統計測試結果。這是 QA 自動化測試的基本模式。',
+      },
+      {
+        title: 'API 響應解析實戰',
+        code: `# 模擬 API 響應
+api_response = {
+    "status_code": 200,
+    "message": "Success",
+    "data": {
+        "user_id": "user_123",
+        "balance": 1000.50,
+        "currency": "USDT",
+        "transactions": [
+            {"tx_id": "tx_001", "amount": 100, "status": "completed"},
+            {"tx_id": "tx_002", "amount": 50, "status": "pending"},
+            {"tx_id": "tx_003", "amount": 200, "status": "completed"}
+        ]
+    }
+}
+
+# 解析基本資訊
+status_code = api_response["status_code"]
+user_id = api_response["data"]["user_id"]
+balance = api_response["data"]["balance"]
+
+print(f"用戶 {user_id} 餘額: {balance} USDT")
+
+# 解析交易列表
+transactions = api_response["data"]["transactions"]
+print(f"\\n共有 {len(transactions)} 筆交易:")
+
+completed_amount = 0
+pending_amount = 0
+
+for tx in transactions:
+    tx_id = tx["tx_id"]
+    amount = tx["amount"]
+    status = tx["status"]
+
+    print(f"- {tx_id}: {amount} USDT ({status})")
+
+    if status == "completed":
+        completed_amount += amount
+    elif status == "pending":
+        pending_amount += amount
+
+print(f"\\n已完成交易總額: {completed_amount} USDT")
+print(f"待處理交易總額: {pending_amount} USDT")
+print(f"可用餘額: {balance} USDT")`,
+        language: 'python',
+        explanation: '展示如何解析嵌套的 JSON 數據結構，這是 API 測試中最常見的操作。學會提取、遍歷和聚合數據。',
+      },
+    ],
+
+    exercises: [
+      {
+        title: '練習 1-5: 基本變量與運算',
+        description: '創建變量、字串拼接、金額計算、狀態碼判斷、溫度轉換函數',
+        difficulty: 'easy',
+      },
+      {
+        title: '練習 6-10: 列表操作',
+        description: '用戶列表管理、狀態碼遍歷、金額邊界值測試、幣種驗證、測試結果統計',
+        difficulty: 'easy',
+      },
+      {
+        title: '練習 11-15: 字典操作',
+        description: '支付請求創建、API 響應解析、字典修改、Headers 構建、總金額計算',
+        difficulty: 'medium',
+      },
+      {
+        title: '練習 16-20: 函數與綜合應用',
+        description: '金額驗證函數、URL 構建函數、支付狀態檢查、批量測試、完整 API 測試模擬',
+        difficulty: 'medium',
+      },
+    ],
+
+    interviewTips: [
+      {
+        question: 'Python 的列表和元組有什麼區別？',
+        answer: '列表是可變的（mutable），可以修改、添加、刪除元素；元組是不可變的（immutable），創建後不能修改。在測試中，列表用於動態數據，元組用於固定配置。',
+        priority: 'high',
+      },
+      {
+        question: '如何在 Python 中處理 JSON 數據？',
+        answer: 'Python 的字典（dict）與 JSON 完全對應。使用 json.loads() 將 JSON 字串轉為字典，json.dumps() 將字典轉為 JSON 字串。API 測試中常用 response.json() 直接解析。',
+        priority: 'high',
+      },
+      {
+        question: 'for 循環和 while 循環的使用場景？',
+        answer: 'for 循環用於已知次數或遍歷序列（如測試數據列表）；while 循環用於未知次數或條件判斷（如等待 API 響應、重試機制）。測試中 for 循環更常用。',
+        priority: 'medium',
+      },
+      {
+        question: '如何設計一個測試用例的數據結構？',
+        answer: '使用字典存儲測試數據，包含 input（輸入）、expected（預期）、actual（實際）、result（結果）等字段。可以用列表存儲多個測試用例，便於批量執行和報告生成。',
+        priority: 'high',
+      },
+    ],
+
+    resources: [
+      {
+        type: 'doc',
+        title: 'Python 官方教程（中文）',
+        url: 'https://docs.python.org/zh-tw/3/tutorial/',
+        description: '官方入門教程，權威且全面',
+      },
+      {
+        type: 'practice',
+        title: 'Day 1 練習題（20 題）',
+        description: '完成 20 個 Python 基礎練習，涵蓋變量、列表、字典、函數',
+      },
+      {
+        type: 'article',
+        title: 'Python f-string 格式化指南',
+        description: '學習現代 Python 字串格式化方法',
+      },
+    ],
+
+    prerequisites: [
+      '無需任何編程基礎',
+      '準備好學習的心態',
+      '每天投入 10 小時學習時間',
+    ],
+
+    nextSteps: [
+      'Day 2: 學習條件判斷進階、異常處理',
+      'Day 3: 學習類別（Class）和物件導向',
+      'Day 4: 開始 HTTP 和 API 測試',
+    ],
+  },
+
+  // ==================== DAY 2 ====================
+  {
+    id: 'day2',
+    title: 'Day 2: Python 進階語法',
+    description: '掌握複雜條件判斷、異常處理機制，理解 HTTP 協議基礎，完成 15 個進階練習',
+    week: 1,
+    day: 'Day 2',
+    category: 'Python 基礎',
+    icon: 'psychology',
+    status: 'backlog',
+    progress: 0,
+    color: '#0A84FF',
+    estimatedHours: 10,
+
+    learningObjectives: [
+      '✅ 掌握複雜條件判斷（and, or, not, 嵌套 if）',
+      '✅ 學會異常處理（try-except-finally-else）',
+      '✅ 理解 HTTP 基礎概念（方法、狀態碼、Headers）',
+      '✅ 掌握 while 循環和 break/continue',
+      '✅ 學會使用內建函數（len, range, enumerate, zip）',
+      '✅ 理解布林邏輯和短路求值',
+      '✅ 獨立完成 15 個進階練習題（至少 12 題）',
+    ],
+
+    coreConcepts: [
+      {
+        term: '異常處理 (Exception Handling)',
+        definition: '用 try-except 捕獲和處理程序執行中的錯誤，避免程序崩潰。',
+        example: 'try:\n    response = api_call()\nexcept ConnectionError:\n    print("API 連接失敗")\nfinally:\n    cleanup()',
+        importance: 'critical',
+      },
+      {
+        term: 'HTTP 方法 (HTTP Methods)',
+        definition: 'REST API 的四種主要操作：GET（讀取）、POST（創建）、PUT（更新）、DELETE（刪除）。',
+        example: 'GET /api/users/123 - 獲取用戶\nPOST /api/payments - 創建支付\nPUT /api/users/123 - 更新用戶\nDELETE /api/users/123 - 刪除用戶',
+        importance: 'critical',
+      },
+      {
+        term: 'HTTP 狀態碼 (Status Codes)',
+        definition: '服務器響應的狀態標識：2xx 成功、3xx 重定向、4xx 客戶端錯誤、5xx 服務器錯誤。',
+        example: '200 OK - 成功\n201 Created - 創建成功\n400 Bad Request - 請求錯誤\n401 Unauthorized - 未授權\n404 Not Found - 資源不存在\n500 Internal Server Error - 服務器錯誤',
+        importance: 'critical',
+      },
+      {
+        term: '邏輯運算符 (Logical Operators)',
+        definition: 'and（且）、or（或）、not（非），用於組合多個條件。支持短路求值。',
+        example: 'if amount > 0 and amount <= 10000:\n    print("有效金額")\nif status == "pending" or status == "processing":\n    print("處理中")',
+        importance: 'important',
+      },
+      {
+        term: 'while 循環',
+        definition: '基於條件的循環，條件為 True 時重複執行。常用於等待、重試機制。',
+        example: 'retry_count = 0\nwhile retry_count < 3:\n    if api_call_success():\n        break\n    retry_count += 1',
+        importance: 'important',
+      },
+    ],
+
+    knowledgePoints: [
+      {
+        title: '1. 複雜條件判斷（API 測試場景）',
+        content: `在實際測試中，常需要組合多個條件進行判斷。Python 提供 and, or, not 邏輯運算符。
+
+**邏輯運算符：**
+- and：所有條件都為 True 時返回 True
+- or：任一條件為 True 時返回 True
+- not：取反，True 變 False，False 變 True
+
+**短路求值（重要概念）：**
+- and：如果第一個條件為 False，不會檢查後面的條件
+- or：如果第一個條件為 True，不會檢查後面的條件
+
+**優先級：**
+- not > and > or
+- 使用括號 () 明確優先級`,
+        codeExample: `# API 響應驗證（複雜條件）
+status_code = 200
+response_time = 1.5
+data_valid = True
+
+# 判斷 API 調用是否成功
+if status_code == 200 and response_time < 2.0 and data_valid:
+    print("✅ API 測試通過")
+else:
+    print("❌ API 測試失敗")
+
+# 金額驗證（多條件）
+amount = 100
+currency = "USDT"
+user_verified = True
+
+# 檢查是否允許交易
+if (amount >= 0.01 and amount <= 10000) and \\
+   (currency in ["USDT", "BTC", "ETH"]) and \\
+   user_verified:
+    print("✅ 允許交易")
+else:
+    print("❌ 拒絕交易")
+
+# 錯誤狀態判斷（or 運算）
+status_code = 404
+
+if status_code == 400 or status_code == 401 or status_code == 404:
+    print("⚠️ 客戶端錯誤")
+elif 500 <= status_code < 600:
+    print("❌ 服務器錯誤")
+
+# 更簡潔的寫法（使用 in）
+if status_code in [400, 401, 404]:
+    print("⚠️ 客戶端錯誤")
+
+# not 運算符
+is_authenticated = False
+
+if not is_authenticated:
+    print("❌ 用戶未登錄")
+
+# 複雜嵌套條件
+user_role = "admin"
+is_active = True
+has_permission = True
+
+if user_role == "admin":
+    if is_active and has_permission:
+        print("✅ 允許操作")
+    else:
+        print("❌ 權限不足")
+elif user_role == "user":
+    if is_active:
+        print("✅ 允許基本操作")
+    else:
+        print("❌ 帳號已停用")
+else:
+    print("❌ 未知角色")`,
+        language: 'python',
+      },
+      {
+        title: '2. 異常處理（try-except-finally）',
+        content: `異常處理是 API 測試中的核心技能，用於處理網絡錯誤、超時、數據解析失敗等問題。
+
+**為什麼需要異常處理？**
+- API 調用可能失敗（網絡問題、服務器錯誤）
+- 數據解析可能出錯（JSON 格式錯誤）
+- 避免程序因錯誤而崩潰
+
+**異常處理結構：**
+- try: 嘗試執行的代碼
+- except: 捕獲特定異常
+- else: try 成功時執行（可選）
+- finally: 無論成功失敗都執行（清理資源）
+
+**常見異常類型：**
+- ValueError: 值錯誤（數據轉換失敗）
+- KeyError: 字典鍵不存在
+- ZeroDivisionError: 除以零
+- FileNotFoundError: 文件不存在
+- ConnectionError: 網絡連接失敗（API 測試）`,
+        codeExample: `# 基本異常處理
+def validate_amount(amount_str):
+    """驗證並轉換金額字串"""
+    try:
+        amount = float(amount_str)
+        if amount <= 0:
+            return (False, "金額必須大於0")
+        return (True, amount)
+    except ValueError:
+        return (False, "金額格式錯誤")
+
+# 測試
+print(validate_amount("100"))      # (True, 100.0)
+print(validate_amount("abc"))      # (False, "金額格式錯誤")
+print(validate_amount("-10"))      # (False, "金額必須大於0")
+
+# API 響應解析（捕獲多種異常）
+import json
+
+def parse_api_response(response_text):
+    """解析 API JSON 響應"""
+    try:
+        data = json.loads(response_text)
+        payment_id = data["payment_id"]
+        amount = data["amount"]
+        return {"success": True, "payment_id": payment_id, "amount": amount}
+    except json.JSONDecodeError:
+        return {"success": False, "error": "JSON 解析失敗"}
+    except KeyError as e:
+        return {"success": False, "error": f"缺少必要字段: {e}"}
+    except Exception as e:
+        return {"success": False, "error": f"未知錯誤: {e}"}
+
+# try-except-else-finally 完整結構
+def api_test_with_cleanup():
+    """完整的 API 測試流程"""
+    connection = None
+    try:
+        print("1. 建立連接...")
+        connection = "API Connection"  # 模擬連接
+
+        print("2. 發送請求...")
+        response_code = 200  # 模擬響應
+
+        if response_code != 200:
+            raise ConnectionError(f"API 返回錯誤: {response_code}")
+
+        print("3. 解析響應...")
+        data = {"status": "success"}
+
+    except ConnectionError as e:
+        print(f"❌ 連接錯誤: {e}")
+        return False
+    except Exception as e:
+        print(f"❌ 未知錯誤: {e}")
+        return False
+    else:
+        # 只有 try 成功時才執行
+        print("✅ 測試成功")
+        return True
+    finally:
+        # 無論成功失敗都執行（清理資源）
+        if connection:
+            print("4. 關閉連接...")
+            connection = None
+
+# 調用
+result = api_test_with_cleanup()
+
+# 重試機制（結合異常處理）
+def api_call_with_retry(max_retries=3):
+    """帶重試的 API 調用"""
+    for attempt in range(1, max_retries + 1):
+        try:
+            print(f"嘗試 {attempt}/{max_retries}...")
+            # 模擬 API 調用
+            if attempt < 3:  # 前兩次失敗
+                raise ConnectionError("連接超時")
+            print("✅ API 調用成功")
+            return True
+        except ConnectionError as e:
+            print(f"❌ 失敗: {e}")
+            if attempt == max_retries:
+                print("❌ 達到最大重試次數")
+                return False
+
+api_call_with_retry()`,
+        language: 'python',
+      },
+      {
+        title: '3. HTTP 協議基礎（API 測試必備）',
+        content: `HTTP 是 Web API 的基礎協議，理解 HTTP 對 API 測試至關重要。
+
+**HTTP 請求結構：**
+- 請求方法（Method）：GET, POST, PUT, DELETE
+- URL：資源地址
+- Headers：請求頭（如 Authorization, Content-Type）
+- Body：請求體（POST/PUT 時包含數據）
+
+**HTTP 響應結構：**
+- 狀態碼（Status Code）：200, 404, 500...
+- Headers：響應頭
+- Body：響應數據（通常是 JSON）
+
+**RESTful API 設計原則：**
+- GET：獲取資源（不修改數據）
+- POST：創建資源
+- PUT：完整更新資源
+- PATCH：部分更新資源
+- DELETE：刪除資源`,
+        codeExample: `# HTTP 方法對應的操作（RESTful API）
+
+# GET - 獲取資源（不修改數據）
+# URL: GET /api/users/123
+# 用途: 獲取 ID 為 123 的用戶信息
+# 響應: {"user_id": "123", "name": "Alice", "balance": 1000}
+
+# POST - 創建資源
+# URL: POST /api/payments
+# Body: {"amount": 100, "currency": "USDT", "to_user": "bob"}
+# 用途: 創建一筆支付
+# 響應: {"payment_id": "pay_abc123", "status": "success"}
+
+# PUT - 完整更新資源
+# URL: PUT /api/users/123
+# Body: {"name": "Alice Smith", "email": "alice@example.com"}
+# 用途: 更新用戶的所有信息
+# 響應: {"user_id": "123", "name": "Alice Smith", ...}
+
+# DELETE - 刪除資源
+# URL: DELETE /api/users/123
+# 用途: 刪除用戶
+# 響應: {"message": "User deleted successfully"}
+
+# HTTP 狀態碼分類
+status_codes = {
+    # 2xx 成功
+    200: "OK - 請求成功",
+    201: "Created - 資源創建成功（POST 常用）",
+    204: "No Content - 成功但無返回內容（DELETE 常用）",
+
+    # 3xx 重定向
+    301: "Moved Permanently - 永久重定向",
+    302: "Found - 臨時重定向",
+
+    # 4xx 客戶端錯誤
+    400: "Bad Request - 請求格式錯誤",
+    401: "Unauthorized - 未授權（未登錄）",
+    403: "Forbidden - 禁止訪問（已登錄但無權限）",
+    404: "Not Found - 資源不存在",
+    422: "Unprocessable Entity - 請求格式正確但語義錯誤",
+    429: "Too Many Requests - 請求過於頻繁",
+
+    # 5xx 服務器錯誤
+    500: "Internal Server Error - 服務器內部錯誤",
+    502: "Bad Gateway - 網關錯誤",
+    503: "Service Unavailable - 服務不可用",
+    504: "Gateway Timeout - 網關超時",
+}
+
+# 狀態碼判斷函數
+def check_response_status(status_code):
+    """檢查 HTTP 響應狀態"""
+    if 200 <= status_code < 300:
+        return ("success", "✅ 請求成功")
+    elif 400 <= status_code < 500:
+        return ("client_error", f"⚠️ 客戶端錯誤: {status_code}")
+    elif 500 <= status_code < 600:
+        return ("server_error", f"❌ 服務器錯誤: {status_code}")
+    else:
+        return ("unknown", f"❓ 未知狀態: {status_code}")
+
+# 測試
+print(check_response_status(200))  # ('success', '✅ 請求成功')
+print(check_response_status(404))  # ('client_error', '⚠️ 客戶端錯誤: 404')
+print(check_response_status(500))  # ('server_error', '❌ 服務器錯誤: 500')
+
+# HTTP Headers 示例
+headers = {
+    # 認證
+    "Authorization": "Bearer abc123xyz",
+
+    # 內容類型
+    "Content-Type": "application/json",
+
+    # 接受的響應格式
+    "Accept": "application/json",
+
+    # 用戶代理
+    "User-Agent": "Binance-QA-Test/1.0",
+
+    # 自定義 Header
+    "X-Request-ID": "req_12345",
+}
+
+# 構建完整 API 請求信息
+def build_api_request(method, endpoint, body=None):
+    """構建 API 請求字典"""
+    return {
+        "method": method,
+        "url": f"https://api.binance.com{endpoint}",
+        "headers": {
+            "Authorization": "Bearer token123",
+            "Content-Type": "application/json",
+        },
+        "body": body,
+    }
+
+# 示例
+get_request = build_api_request("GET", "/v1/users/123")
+post_request = build_api_request("POST", "/v1/payments", {
+    "amount": 100,
+    "currency": "USDT"
+})
+
+print(get_request)
+print(post_request)`,
+        language: 'python',
+      },
+      {
+        title: '4. while 循環與 break/continue',
+        content: `while 循環用於未知次數的重複操作，常用於等待、重試、輪詢等場景。
+
+**while vs for：**
+- for：已知次數或遍歷序列
+- while：未知次數，基於條件判斷
+
+**控制語句：**
+- break：立即退出循環
+- continue：跳過本次循環，繼續下一次
+
+**常見應用場景：**
+- API 重試機制
+- 等待條件滿足
+- 用戶輸入驗證
+- 輪詢狀態`,
+        codeExample: `# 基本 while 循環
+count = 0
+while count < 5:
+    print(f"計數: {count}")
+    count += 1
+
+# API 重試機制（最常用場景）
+def api_call_with_retry():
+    """模擬 API 重試"""
+    max_retries = 3
+    retry_count = 0
+
+    while retry_count < max_retries:
+        print(f"\\n嘗試 {retry_count + 1}/{max_retries}...")
+
+        # 模擬 API 調用
+        import random
+        success = random.choice([True, False])
+
+        if success:
+            print("✅ API 調用成功")
+            break  # 成功後退出循環
+        else:
+            print("❌ API 調用失敗")
+            retry_count += 1
+
+            if retry_count == max_retries:
+                print("❌ 達到最大重試次數，放棄")
+            else:
+                print("等待 1 秒後重試...")
+
+api_call_with_retry()
+
+# 等待支付狀態變更（輪詢）
+def wait_for_payment_completion(payment_id, timeout=30):
+    """等待支付完成（模擬）"""
+    elapsed_time = 0
+    check_interval = 2  # 每 2 秒檢查一次
+
+    print(f"等待支付 {payment_id} 完成...")
+
+    while elapsed_time < timeout:
+        # 模擬查詢支付狀態
+        import random
+        status = random.choice(["pending", "pending", "completed"])
+
+        print(f"[{elapsed_time}s] 當前狀態: {status}")
+
+        if status == "completed":
+            print("✅ 支付完成")
+            return True
+
+        elapsed_time += check_interval
+
+    print("❌ 等待超時")
+    return False
+
+wait_for_payment_completion("pay_123", timeout=10)
+
+# break 和 continue 示例
+print("\\n=== break 和 continue 示例 ===")
+
+# 找到第一個有效金額就停止
+test_amounts = [0, -10, 0.001, 100, 200, 500]
+
+for amount in test_amounts:
+    if amount <= 0:
+        print(f"跳過無效金額: {amount}")
+        continue  # 跳過本次循環
+
+    if amount >= 100:
+        print(f"✅ 找到有效金額: {amount}")
+        break  # 找到後立即退出
+
+    print(f"檢查金額: {amount}")
+
+# while True 無限循環（需要 break 退出）
+def process_api_requests():
+    """處理 API 請求（簡化版）"""
+    request_count = 0
+
+    while True:  # 無限循環
+        request_count += 1
+        print(f"\\n處理請求 #{request_count}")
+
+        if request_count >= 5:
+            print("✅ 達到處理限制，停止")
+            break  # 退出無限循環
+
+        # 模擬處理
+        print("處理中...")
+
+process_api_requests()
+
+# 用戶輸入驗證（實際場景）
+def validate_user_input():
+    """驗證用戶輸入（模擬）"""
+    attempts = 0
+    max_attempts = 3
+
+    valid_inputs = ["100", "200", "500"]  # 模擬有效輸入
+
+    while attempts < max_attempts:
+        # 實際中這裡應該是 input()
+        user_input = valid_inputs[attempts] if attempts < len(valid_inputs) else "invalid"
+        print(f"\\n輸入: {user_input}")
+
+        try:
+            amount = float(user_input)
+            if 0 < amount <= 10000:
+                print(f"✅ 有效金額: {amount}")
+                return amount
+            else:
+                print("❌ 金額超出範圍 (0-10000)")
+        except ValueError:
+            print("❌ 無效的數字格式")
+
+        attempts += 1
+
+    print("❌ 超過最大嘗試次數")
+    return None
+
+validate_user_input()`,
+        language: 'python',
+      },
+      {
+        title: '5. 內建函數（len, range, enumerate, zip）',
+        content: `Python 提供了豐富的內建函數，大幅簡化代碼編寫。
+
+**常用內建函數：**
+- len()：獲取長度
+- range()：生成數字序列
+- enumerate()：遍歷時同時獲取索引和值
+- zip()：並行遍歷多個序列
+- sum()：求和
+- max()/min()：最大/最小值
+- all()/any()：全部/任一為真
+
+**測試場景應用：**
+- 統計測試結果
+- 批量數據處理
+- 並行比較數據`,
+        codeExample: `# len() - 獲取長度
+test_cases = ["test_1", "test_2", "test_3"]
+print(f"總共 {len(test_cases)} 個測試用例")
+
+api_response = {"user_id": "123", "balance": 1000, "currency": "USDT"}
+print(f"響應包含 {len(api_response)} 個字段")
+
+# range() - 生成數字序列
+# range(stop): 0 到 stop-1
+for i in range(5):
+    print(f"測試 {i}")  # 0, 1, 2, 3, 4
+
+# range(start, stop): start 到 stop-1
+for i in range(1, 6):
+    print(f"測試 {i}")  # 1, 2, 3, 4, 5
+
+# range(start, stop, step): 帶步長
+for i in range(0, 10, 2):
+    print(f"測試 {i}")  # 0, 2, 4, 6, 8
+
+# enumerate() - 同時獲取索引和值
+test_users = ["alice", "bob", "charlie"]
+
+for index, user in enumerate(test_users):
+    print(f"測試 #{index}: {user}")
+# 輸出:
+# 測試 #0: alice
+# 測試 #1: bob
+# 測試 #2: charlie
+
+# 從 1 開始編號
+for index, user in enumerate(test_users, start=1):
+    print(f"測試用例 {index}: {user}")
+
+# zip() - 並行遍歷多個列表
+test_amounts = [100, 200, 500]
+expected_fees = [1, 2, 5]
+actual_fees = [1, 2, 5]
+
+print("\\n=== 費用驗證 ===")
+for amount, expected, actual in zip(test_amounts, expected_fees, actual_fees):
+    status = "✅ PASS" if expected == actual else "❌ FAIL"
+    print(f"金額 {amount}: 預期手續費 {expected}, 實際 {actual} - {status}")
+
+# sum() - 求和
+amounts = [100, 200, 500, 1000]
+total = sum(amounts)
+print(f"\\n總金額: {total}")
+
+# 計算平均值
+average = sum(amounts) / len(amounts)
+print(f"平均金額: {average}")
+
+# max() / min() - 最大最小值
+response_times = [0.5, 1.2, 0.8, 2.1, 0.3]
+print(f"\\n最快響應: {min(response_times)}s")
+print(f"最慢響應: {max(response_times)}s")
+
+# all() / any() - 全部/任一為真
+test_results = [True, True, True, True]
+print(f"\\n所有測試通過: {all(test_results)}")  # True
+
+test_results = [True, False, True, True]
+print(f"所有測試通過: {all(test_results)}")  # False
+print(f"至少一個測試通過: {any(test_results)}")  # True
+
+# 實戰範例：批量驗證 API 響應
+def validate_api_responses(responses):
+    """批量驗證 API 響應"""
+    print("\\n=== API 響應驗證 ===")
+
+    valid_statuses = [200, 201]
+    passed = 0
+    failed = 0
+
+    for index, response in enumerate(responses, start=1):
+        status_code = response["status_code"]
+        response_time = response["response_time"]
+
+        # 驗證狀態碼和響應時間
+        is_valid = status_code in valid_statuses and response_time < 2.0
+
+        if is_valid:
+            print(f"✅ 測試 {index}: 狀態碼 {status_code}, 響應時間 {response_time}s")
+            passed += 1
+        else:
+            print(f"❌ 測試 {index}: 狀態碼 {status_code}, 響應時間 {response_time}s")
+            failed += 1
+
+    print(f"\\n總計: {len(responses)} 個測試")
+    print(f"通過: {passed}, 失敗: {failed}")
+    print(f"通過率: {(passed/len(responses)*100):.1f}%")
+
+# 測試數據
+responses = [
+    {"status_code": 200, "response_time": 0.5},
+    {"status_code": 200, "response_time": 1.2},
+    {"status_code": 500, "response_time": 0.8},
+    {"status_code": 200, "response_time": 3.0},
+]
+
+validate_api_responses(responses)`,
+        language: 'python',
+      },
+      {
+        title: '6. 列表推導式（List Comprehension）',
+        content: `列表推導式是 Python 的強大特性，可以用一行代碼創建列表，代碼更簡潔優雅。
+
+**基本語法：**
+- [表達式 for 變量 in 序列]
+- [表達式 for 變量 in 序列 if 條件]
+
+**優勢：**
+- 代碼更簡潔
+- 執行效率更高
+- 可讀性好（熟悉後）
+
+**適用場景：**
+- 數據轉換
+- 數據過濾
+- 批量測試數據生成`,
+        codeExample: `# 傳統方式 vs 列表推導式
+
+# 傳統方式：生成平方數列表
+squares = []
+for i in range(1, 6):
+    squares.append(i ** 2)
+print(f"傳統方式: {squares}")
+
+# 列表推導式：一行搞定
+squares = [i ** 2 for i in range(1, 6)]
+print(f"推導式: {squares}")  # [1, 4, 9, 16, 25]
+
+# 批量測試數據生成
+# 生成測試用戶 ID
+user_ids = [f"user_{i}" for i in range(1, 6)]
+print(user_ids)  # ['user_1', 'user_2', ..., 'user_5']
+
+# 生成測試金額
+test_amounts = [i * 100 for i in range(1, 11)]
+print(test_amounts)  # [100, 200, 300, ..., 1000]
+
+# 帶條件的列表推導式
+# 只生成偶數
+even_numbers = [i for i in range(1, 11) if i % 2 == 0]
+print(even_numbers)  # [2, 4, 6, 8, 10]
+
+# 過濾有效金額
+all_amounts = [0, 50, 100, 10001, 500, -10, 200]
+valid_amounts = [amt for amt in all_amounts if 0 < amt <= 10000]
+print(f"有效金額: {valid_amounts}")  # [50, 100, 500, 200]
+
+# 數據轉換：提取 API 響應中的特定字段
+api_responses = [
+    {"user_id": "123", "balance": 1000},
+    {"user_id": "456", "balance": 2000},
+    {"user_id": "789", "balance": 1500},
+]
+
+# 提取所有 user_id
+user_ids = [response["user_id"] for response in api_responses]
+print(f"用戶 ID: {user_ids}")
+
+# 提取所有 balance
+balances = [response["balance"] for response in api_responses]
+print(f"餘額列表: {balances}")
+print(f"總餘額: {sum(balances)}")
+
+# 組合條件：提取餘額大於 1500 的用戶 ID
+rich_users = [
+    response["user_id"]
+    for response in api_responses
+    if response["balance"] > 1500
+]
+print(f"高餘額用戶: {rich_users}")
+
+# 實戰：批量構建 API URL
+user_ids = ["123", "456", "789"]
+base_url = "https://api.binance.com/v1/users"
+
+urls = [f"{base_url}/{uid}" for uid in user_ids]
+for url in urls:
+    print(url)
+
+# 實戰：批量驗證狀態碼
+status_codes = [200, 201, 400, 404, 500, 200, 200]
+
+# 統計成功的請求數量
+success_count = len([code for code in status_codes if 200 <= code < 300])
+print(f"\\n成功請求: {success_count}/{len(status_codes)}")
+
+# 找出所有錯誤狀態碼
+error_codes = [code for code in status_codes if code >= 400]
+print(f"錯誤狀態碼: {error_codes}")
+
+# 嵌套列表推導式（進階）
+# 生成測試數據組合
+currencies = ["USDT", "BTC"]
+amounts = [100, 200]
+
+# 生成所有組合
+test_cases = [
+    {"currency": curr, "amount": amt}
+    for curr in currencies
+    for amt in amounts
+]
+
+print("\\n測試用例:")
+for case in test_cases:
+    print(case)
+# 輸出:
+# {'currency': 'USDT', 'amount': 100}
+# {'currency': 'USDT', 'amount': 200}
+# {'currency': 'BTC', 'amount': 100}
+# {'currency': 'BTC', 'amount': 200}`,
+        language: 'python',
+      },
+    ],
+
+    codeExamples: [
+      {
+        title: '完整範例：API 響應驗證系統（帶異常處理）',
+        code: `import json
+
+def validate_api_response(response_text, expected_status=200):
+    """
+    驗證 API 響應
+
+    Args:
+        response_text: JSON 響應字串
+        expected_status: 預期狀態碼
+
+    Returns:
+        dict: 驗證結果
+    """
+    result = {
+        "passed": False,
+        "errors": [],
+        "data": None
+    }
+
+    # 1. JSON 解析
+    try:
+        data = json.loads(response_text)
+    except json.JSONDecodeError as e:
+        result["errors"].append(f"JSON 解析失敗: {e}")
+        return result
+
+    # 2. 檢查必要字段
+    required_fields = ["status_code", "message", "data"]
+
+    for field in required_fields:
+        if field not in data:
+            result["errors"].append(f"缺少必要字段: {field}")
+
+    if result["errors"]:
+        return result
+
+    # 3. 驗證狀態碼
+    actual_status = data["status_code"]
+    if actual_status != expected_status:
+        result["errors"].append(
+            f"狀態碼不匹配: 預期 {expected_status}, 實際 {actual_status}"
+        )
+
+    # 4. 驗證業務數據
+    try:
+        business_data = data["data"]
+
+        # 檢查支付 ID 格式
+        if "payment_id" in business_data:
+            payment_id = business_data["payment_id"]
+            if not payment_id.startswith("pay_"):
+                result["errors"].append(f"支付 ID 格式錯誤: {payment_id}")
+
+        # 檢查金額
+        if "amount" in business_data:
+            amount = business_data["amount"]
+            if not isinstance(amount, (int, float)) or amount <= 0:
+                result["errors"].append(f"金額無效: {amount}")
+
+    except KeyError as e:
+        result["errors"].append(f"業務數據錯誤: {e}")
+    except Exception as e:
+        result["errors"].append(f"未知錯誤: {e}")
+
+    # 5. 判斷總體結果
+    if not result["errors"]:
+        result["passed"] = True
+        result["data"] = data
+
+    return result
+
+
+# 測試案例
+test_cases = [
+    {
+        "name": "正常響應",
+        "response": '''{"status_code": 200, "message": "Success",
+                       "data": {"payment_id": "pay_123", "amount": 100}}'''
+    },
+    {
+        "name": "JSON 格式錯誤",
+        "response": '''{"status_code": 200, "message": "Success"'''  # 缺少結尾
+    },
+    {
+        "name": "缺少必要字段",
+        "response": '''{"status_code": 200}'''
+    },
+    {
+        "name": "狀態碼錯誤",
+        "response": '''{"status_code": 500, "message": "Error", "data": {}}'''
+    },
+    {
+        "name": "金額無效",
+        "response": '''{"status_code": 200, "message": "Success",
+                       "data": {"payment_id": "pay_123", "amount": -100}}'''
+    },
+]
+
+# 批量測試
+print("===== API 響應驗證測試 =====\\n")
+
+passed = 0
+failed = 0
+
+for i, test_case in enumerate(test_cases, 1):
+    print(f"測試 {i}: {test_case['name']}")
+    result = validate_api_response(test_case["response"])
+
+    if result["passed"]:
+        print("  ✅ PASS")
+        passed += 1
+    else:
+        print("  ❌ FAIL")
+        for error in result["errors"]:
+            print(f"     - {error}")
+        failed += 1
+    print()
+
+print(f"===== 測試結果 =====")
+print(f"總計: {len(test_cases)} 個測試")
+print(f"通過: {passed} 個 ({passed/len(test_cases)*100:.1f}%)")
+print(f"失敗: {failed} 個 ({failed/len(test_cases)*100:.1f}%)")`,
+        language: 'python',
+        explanation: '展示完整的 API 響應驗證流程，包含 JSON 解析、字段檢查、數據驗證、異常處理。這是真實 API 測試中的核心邏輯。',
+      },
+      {
+        title: 'HTTP 狀態碼處理與重試機制',
+        code: `import time
+import random
+
+class APITester:
+    """API 測試類（簡化版）"""
+
+    def __init__(self, base_url, max_retries=3, timeout=30):
+        self.base_url = base_url
+        self.max_retries = max_retries
+        self.timeout = timeout
+
+    def call_api(self, endpoint, method="GET"):
+        """
+        模擬 API 調用
+
+        實際中應該使用 requests 庫
+        這裡用隨機數模擬不同的響應狀態
+        """
+        # 模擬 API 調用（70% 成功率）
+        status_code = random.choice([200, 200, 200, 500, 503, 404, 200])
+        response_time = random.uniform(0.1, 2.0)
+
+        return {
+            "status_code": status_code,
+            "response_time": response_time,
+            "url": f"{self.base_url}{endpoint}"
+        }
+
+    def call_with_retry(self, endpoint, method="GET"):
+        """帶重試機制的 API 調用"""
+        for attempt in range(1, self.max_retries + 1):
+            print(f"\\n[嘗試 {attempt}/{self.max_retries}] {method} {endpoint}")
+
+            try:
+                response = self.call_api(endpoint, method)
+                status_code = response["status_code"]
+                response_time = response["response_time"]
+
+                print(f"  狀態碼: {status_code}")
+                print(f"  響應時間: {response_time:.2f}s")
+
+                # 根據狀態碼判斷
+                if status_code == 200:
+                    print("  ✅ 成功")
+                    return response
+
+                elif status_code == 404:
+                    print("  ❌ 資源不存在 - 不重試")
+                    return response
+
+                elif status_code in [500, 502, 503, 504]:
+                    print(f"  ⚠️ 服務器錯誤 ({status_code})")
+
+                    if attempt < self.max_retries:
+                        wait_time = 2 ** attempt  # 指數退避: 2, 4, 8 秒
+                        print(f"  等待 {wait_time} 秒後重試...")
+                        time.sleep(wait_time)
+                        continue
+                    else:
+                        print("  ❌ 達到最大重試次數")
+                        return response
+
+                elif 400 <= status_code < 500:
+                    print(f"  ❌ 客戶端錯誤 ({status_code}) - 不重試")
+                    return response
+
+                else:
+                    print(f"  ❓ 未知狀態碼 ({status_code})")
+                    return response
+
+            except Exception as e:
+                print(f"  ❌ 異常: {e}")
+
+                if attempt < self.max_retries:
+                    print(f"  等待 2 秒後重試...")
+                    time.sleep(2)
+                else:
+                    print("  ❌ 達到最大重試次數")
+                    raise
+
+        return None
+
+    def batch_test(self, endpoints):
+        """批量測試多個 API"""
+        print("\\n" + "="*50)
+        print("開始批量測試")
+        print("="*50)
+
+        results = []
+
+        for endpoint in endpoints:
+            response = self.call_with_retry(endpoint)
+            results.append({
+                "endpoint": endpoint,
+                "status_code": response["status_code"],
+                "success": response["status_code"] == 200
+            })
+            time.sleep(0.5)  # 避免請求過快
+
+        # 統計結果
+        print("\\n" + "="*50)
+        print("測試結果統計")
+        print("="*50)
+
+        total = len(results)
+        passed = sum(1 for r in results if r["success"])
+        failed = total - passed
+
+        print(f"\\n總計: {total} 個 API")
+        print(f"成功: {passed} 個 ({passed/total*100:.1f}%)")
+        print(f"失敗: {failed} 個 ({failed/total*100:.1f}%)")
+
+        print("\\n詳細結果:")
+        for result in results:
+            status = "✅" if result["success"] else "❌"
+            print(f"  {status} {result['endpoint']} - {result['status_code']}")
+
+
+# 使用範例
+if __name__ == "__main__":
+    # 創建測試器
+    tester = APITester(
+        base_url="https://api.binance.com",
+        max_retries=3,
+        timeout=30
+    )
+
+    # 批量測試
+    endpoints = [
+        "/v1/users/123",
+        "/v1/payments",
+        "/v1/balance",
+        "/v1/transactions",
+    ]
+
+    tester.batch_test(endpoints)`,
+        language: 'python',
+        explanation: '展示 HTTP 狀態碼處理邏輯、指數退避重試機制、批量測試。這是生產環境 API 測試的標準模式。',
+      },
+    ],
+
+    exercises: [
+      {
+        title: '練習 1-5: 複雜條件判斷',
+        description: 'HTTP 狀態碼分類、金額範圍驗證、用戶權限檢查、多幣種驗證、API 響應時間判斷',
+        difficulty: 'easy',
+      },
+      {
+        title: '練習 6-10: 異常處理',
+        description: 'JSON 解析錯誤處理、字典取值異常、類型轉換異常、除零錯誤、文件操作異常',
+        difficulty: 'medium',
+      },
+      {
+        title: '練習 11-15: while 循環與綜合應用',
+        description: 'API 重試機制、狀態輪詢、用戶輸入驗證、列表推導式數據轉換、完整 API 測試腳本',
+        difficulty: 'medium',
+      },
+    ],
+
+    interviewTips: [
+      {
+        question: 'Python 中如何處理異常？try-except 的最佳實踐是什麼？',
+        answer: '使用 try-except-finally 結構。最佳實踐：1) 捕獲特定異常而非 Exception 2) 在 finally 中清理資源 3) 不要使用異常控制流程 4) 記錄異常日誌。在 API 測試中，常用於處理網絡錯誤、JSON 解析失敗、超時等場景。',
+        priority: 'high',
+      },
+      {
+        question: 'HTTP 狀態碼 401 和 403 的區別是什麼？',
+        answer: '401 Unauthorized 表示未認證（未登錄），需要提供身份驗證信息。403 Forbidden 表示已認證但無權限訪問該資源。測試時：401 應重新登錄獲取 token，403 需要檢查用戶權限配置。',
+        priority: 'high',
+      },
+      {
+        question: 'API 測試中如何設計重試機制？',
+        answer: '設計要點：1) 只對可重試的錯誤重試（5xx，不包括 4xx）2) 使用指數退避策略（2^n 秒）3) 設置最大重試次數 4) 記錄每次重試日誌 5) 對於冪等性操作（GET）可以重試，非冪等性操作（POST）需謹慎。',
+        priority: 'high',
+      },
+      {
+        question: 'Python 的 and 和 or 如何實現短路求值？為什麼重要？',
+        answer: 'and: 第一個為 False 時立即返回，不檢查後續條件。or: 第一個為 True 時立即返回。重要性：1) 提升性能 2) 避免錯誤（如 x != 0 and 10/x > 5）3) 利用短路特性可以寫出更簡潔的代碼（如 value or default）。',
+        priority: 'medium',
+      },
+    ],
+
+    resources: [],
+    prerequisites: ['完成 Day 1 的所有練習', '理解 Python 基礎語法'],
+    nextSteps: ['Day 3: 學習類別（Class）和物件導向', 'Day 4: 開始 HTTP 和 API 實戰測試'],
+  },
+
+  // ... 其他天數會在用戶確認 Day 1 後繼續添加
+];
+
+export const getCategoryColor = (category: string): string => {
+  const colors: { [key: string]: string } = {
+    'Python 基礎': '#0A84FF',
+    'API Testing': '#30D158',
+    'Testing': '#FF9F0A',
+    'Payment': '#30D158',
+    'Java': '#FF453A',
+    'Database': '#5E5CE6',
+    'DevOps': '#30D158',
+    'Interview': '#FF9F0A',
+    'Project': '#0A84FF'
+  };
+  return colors[category] || '#8E8E93';
+};
